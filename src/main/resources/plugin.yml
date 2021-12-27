@@ -1,0 +1,3 @@
+main: plugin.App
+name: Towns
+version: 0.1
