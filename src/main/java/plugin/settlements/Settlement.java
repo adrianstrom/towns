@@ -1,21 +1,35 @@
 package plugin.settlements;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import plugin.extensions.Location;
+
 public abstract class Settlement {
+	protected UUID uuid;
+	protected int weightedValue;
 	protected String settlementName;
 	protected Location settlementLocation;
 	ArrayList<Player> citizens = new ArrayList<Player>();
-	protected int weightedValue;
 	protected boolean deleted;
 	
 	public Settlement(String settlementName, Location settlementLocation)
 	{
+		this.uuid = UUID.randomUUID();
 		this.settlementName = settlementName;
 		this.settlementLocation = settlementLocation;
+	}
+
+	public Settlement()
+	{
+
+	}
+
+	public UUID getUUID()
+	{
+		return this.uuid;
 	}
 	
 	public String getSettlementName()

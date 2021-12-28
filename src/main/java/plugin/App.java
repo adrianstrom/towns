@@ -4,39 +4,29 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import plugin.commands.CreateSettlement;
 import plugin.settlements.Homestead;
 
 public class App extends JavaPlugin
 {
-    private File townsFile;
+    public File townsFile;
 
     @Override
     public void onEnable() 
     {
-        townsFile = new File("plugins/Towns/towns.xml");
-        getLogger().info(("Enabling..."));
-        if (!getDataFolder().exists())
-        { 
-            getDataFolder().mkdir();
-        }
-        ObjectMapper mapper = new XmlMapper();
-        try {
-            mapper.writeValue(townsFile, new Homestead("My First Homestead", null));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        getLogger().info(("Enabled!"));
+        InitializePersitence();
+		InitializeClasses();
+        SetFile();
     }
 
     @Override
     public void onDisable() 
     {
         getLogger().info(("Disabling..."));
-        ObjectMapper mapper = new XmlMapper();
+        ObjectMapper mapper = new ObjectMapper();
         try {
             Homestead homestad = mapper.readValue(townsFile, Homestead.class);
             getLogger().info(homestad.getSettlementName());
@@ -46,6 +36,36 @@ public class App extends JavaPlugin
             e.printStackTrace();
         }
         getLogger().info(("Disabled..."));
+    }
+
+    private void InitializePersitence()
+    {
+        
+    }
+
+    private void InitializeClasses()
+    {
+        new CreateSettlement(this);
+    }
+
+    private void SetFile()
+    {
+        try 
+        {
+            if (!getDataFolder().exists())
+            { 
+                getDataFolder().mkdir();
+                townsFile = new File("plugins/Towns/towns.json");
+                if(townsFile.createNewFile())
+                {
+                    getLogger().info(("Created towns.json."));
+                }
+            }
+        }
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
     }
 
 }

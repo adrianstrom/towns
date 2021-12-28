@@ -1,3 +1,8 @@
 main: plugin.App
 name: Towns
 version: 0.1
+
+commands:
+  bosetting:
+    aliases: [settlement]
+    description: bosetting kommandoer

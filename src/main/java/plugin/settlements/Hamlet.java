@@ -2,7 +2,7 @@ package plugin.settlements;
 
 import java.util.ArrayList;
 
-import org.bukkit.Location;
+import plugin.extensions.Location;
 
 public class Hamlet extends Settlement {
 	ArrayList<String> laws = new ArrayList<String>();

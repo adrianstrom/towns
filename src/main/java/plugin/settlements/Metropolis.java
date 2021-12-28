@@ -1,6 +1,6 @@
 package plugin.settlements;
 
-import org.bukkit.Location;
+import plugin.extensions.Location;
 
 public class Metropolis extends Settlement {
 

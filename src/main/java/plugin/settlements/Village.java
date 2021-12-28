@@ -2,7 +2,7 @@ package plugin.settlements;
 
 import java.util.ArrayList;
 
-import org.bukkit.Location;
+import plugin.extensions.Location;
 
 public class Village extends Settlement {
 	ArrayList<String> laws = new ArrayList<String>();
