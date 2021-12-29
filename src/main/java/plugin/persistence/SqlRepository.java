@@ -20,7 +20,7 @@ public class SqlRepository implements SettlementRepository
     }
 
     @Override
-    public Settlement createSettlement(String name, Location location) {
+    public <T extends Settlement> Settlement createSettlement(String name, Location location, Class<T> classType) {
         return null;
     }
 
@@ -43,5 +43,4 @@ public class SqlRepository implements SettlementRepository
     public boolean upgradeSettlement(String name) {
         return false;
     }
-
 }

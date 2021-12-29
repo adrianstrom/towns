@@ -8,4 +8,7 @@ public class Megapolis extends Settlement {
 		super(settlementName, location);
 	}
 
+	public Megapolis() {
+		super();
+	}
 }

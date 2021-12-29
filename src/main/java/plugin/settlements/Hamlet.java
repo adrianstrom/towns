@@ -1,16 +1,15 @@
 package plugin.settlements;
 
-import java.util.ArrayList;
-
 import plugin.extensions.Location;
 
-public class Hamlet extends Settlement {
-	ArrayList<String> laws = new ArrayList<String>();
+public class Hamlet extends LowDensitySettlement {
 	
-	public Hamlet(String settlementName, Location settlementLocation)
-	{
+	public Hamlet(String settlementName, Location settlementLocation) {
 		super(settlementName, settlementLocation);
-		this.weightedValue = 2;
+	}
+
+	public Hamlet() {
+		super();
 	}
 	
 }

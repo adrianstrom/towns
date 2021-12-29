@@ -2,6 +2,7 @@ package plugin.persistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -37,25 +38,35 @@ public class JsonRepository implements SettlementRepository
 
 /** Returns null if settlement wasn't created. */
     @Override
-    public Settlement createSettlement(String settlementName, org.bukkit.Location location) {
+    public <T extends Settlement> Settlement createSettlement(String settlementName, org.bukkit.Location location, Class<T> classType) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ObjectNode node = (ObjectNode) mapper.readTree(townsFile);
-            ArrayNode settlements = (ArrayNode) node.get("settlements");
+            JsonNode node = mapper.readTree(townsFile);
+            ArrayNode settlementsNode = null;
 
-            // create xml tree if settlements doesnt exist
-            if(settlements == null) {
+            if(node instanceof ObjectNode)
+            {
+                settlementsNode = (ArrayNode) node.get("settlements");
+            } else
+            {
                 node = mapper.createObjectNode();
-                settlements = node.putArray("settlements");
+                settlementsNode = ((ObjectNode) node).putArray("settlements");
             }
-
-            Homestead settlement = new Homestead(settlementName, new Location(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
-            settlements.addPOJO(settlement);
-
+            
+            T settlement = classType.newInstance();
+            settlement.setUUID();
+            settlement.setSettlementName(settlementName);
+            settlement.setSettlementLocation(new Location (location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
+            
+            settlementsNode.addPOJO(settlement);
             mapper.writeValue(townsFile, node);
-            return (Settlement)settlement;
+            return settlement;
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -69,19 +80,22 @@ public class JsonRepository implements SettlementRepository
             ArrayNode settlementsNode = (ArrayNode) node.get("settlements");
 
             for (JsonNode settlementNode : settlementsNode) {
-                ObjectNode object = (ObjectNode) settlementNode;
+                plugin.getLogger().info("start");
+                plugin.getLogger().info(settlementNode.toString());
+                plugin.getLogger().info("end");
+                if(settlementNode.toString().equals("{}"))
+                {
+                    continue;
+                }
+                Settlement settlement = mapper.readValue(settlementNode.toString(), Settlement.class);
+                plugin.getLogger().info(settlement.toString());
 
-                if(object != null) {
-                    String settlementNameNode = object.get("settlementName").toString().replace("\"", "");
-
-                    if(settlementNameNode.equals(name)) {
-                        object.removeAll();
-                        mapper.writeValue(townsFile, node);
-                        return true;
-                    }
+                if(settlement.getSettlementName().equals(name)) {
+                    settlement.setDeleted();
+                    mapper.writeValue(townsFile, node);
+                    return true;
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

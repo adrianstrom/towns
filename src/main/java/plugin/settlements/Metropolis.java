@@ -8,4 +8,7 @@ public class Metropolis extends Settlement {
 		super(settlementName, location);
 	}
 
+	public Metropolis() {
+		super();
+	}
 }

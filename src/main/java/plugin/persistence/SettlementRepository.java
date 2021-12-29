@@ -7,7 +7,7 @@ import plugin.settlements.Settlement;
 
 public interface SettlementRepository 
 {
-  public Settlement createSettlement(String name, org.bukkit.Location location);
+  public <T extends Settlement> Settlement createSettlement(String name, org.bukkit.Location location, Class<T> classType);
   public Settlement getSettlement(UUID id);
   public boolean deleteSettlement(String name);
   public boolean upgradeSettlement(String name);
