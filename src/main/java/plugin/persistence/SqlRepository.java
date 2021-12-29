@@ -3,8 +3,7 @@ package plugin.persistence;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
-
-import plugin.settlements.Settlement;
+import plugin.settlements.base.Settlement;
 
 /* 
     Create PostgreSQL database or MySQL database.

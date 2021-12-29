@@ -1,4 +1,4 @@
-package plugin.settlements;
+package plugin.settlements.base;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -8,6 +8,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.bukkit.entity.Player;
 
 import plugin.extensions.Location;
+import plugin.settlements.Hamlet;
+import plugin.settlements.Homestead;
+import plugin.settlements.Megapolis;
+import plugin.settlements.Metropolis;
+import plugin.settlements.Suburb;
+import plugin.settlements.Town;
+import plugin.settlements.Village;
 
 @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, property="type")
 @JsonIgnoreProperties(ignoreUnknown = true)

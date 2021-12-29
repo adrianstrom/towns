@@ -1,8 +1,7 @@
 package plugin.persistence;
 
 import java.util.ArrayList;
-
-import plugin.settlements.Settlement;
+import plugin.settlements.base.Settlement;
 
 public interface SettlementRepository 
 {

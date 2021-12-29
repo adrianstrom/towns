@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import plugin.App;
 import plugin.settlements.Hamlet;
 import plugin.settlements.Homestead;
-import plugin.settlements.Settlement;
+import plugin.settlements.base.Settlement;
 import plugin.utils.Utils;
 
 public class CreateSettlement implements CommandExecutor {

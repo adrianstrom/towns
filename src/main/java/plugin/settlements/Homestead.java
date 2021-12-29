@@ -1,6 +1,7 @@
 package plugin.settlements;
 
 import plugin.extensions.Location;
+import plugin.settlements.base.Settlement;
 
 public class Homestead extends Settlement {
 

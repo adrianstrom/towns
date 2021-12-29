@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import plugin.App;
 import plugin.extensions.Location;
-import plugin.settlements.Settlement;
+import plugin.settlements.base.Settlement;
 
 public class JsonRepository implements SettlementRepository
 {

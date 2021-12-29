@@ -1,4 +1,4 @@
-package plugin.settlements;
+package plugin.settlements.base;
 
 import java.util.ArrayList;
 import plugin.city.CityBank;
