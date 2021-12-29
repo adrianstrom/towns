@@ -15,26 +15,23 @@ import plugin.extensions.Location;
 import plugin.settlements.Homestead;
 import plugin.settlements.Settlement;
 
-public class JsonAccess implements HistoryAccess 
+public class JsonRepository implements SettlementRepository
 {
     private App plugin;
     private File townsFile;
 
-    public JsonAccess(App plugin)
-    {
+    public JsonRepository(App plugin) {
         this.plugin = plugin;
         SetFile();
     }
 
     @Override
-    public Settlement getSettlement(UUID id) 
-    {
+    public Settlement getSettlement(UUID id) {
         return null;
     }
 
     @Override
-    public ArrayList<Settlement> getSettlements() 
-    {
+    public ArrayList<Settlement> getSettlements()  {
         return null;
     }
 
@@ -47,8 +44,7 @@ public class JsonAccess implements HistoryAccess
             ArrayNode settlements = (ArrayNode) node.get("settlements");
 
             // create xml tree if settlements doesnt exist
-            if(settlements == null)
-            {
+            if(settlements == null) {
                 node = mapper.createObjectNode();
                 settlements = node.putArray("settlements");
             }
@@ -72,16 +68,13 @@ public class JsonAccess implements HistoryAccess
             ObjectNode node = (ObjectNode) mapper.readTree(townsFile);
             ArrayNode settlementsNode = (ArrayNode) node.get("settlements");
 
-            for (JsonNode settlementNode : settlementsNode)
-            {
+            for (JsonNode settlementNode : settlementsNode) {
                 ObjectNode object = (ObjectNode) settlementNode;
 
-                if(object != null)
-                {
+                if(object != null) {
                     String settlementNameNode = object.get("settlementName").toString().replace("\"", "");
 
-                    if(settlementNameNode.equals(name))
-                    {
+                    if(settlementNameNode.equals(name)) {
                         object.removeAll();
                         mapper.writeValue(townsFile, node);
                         return true;
@@ -95,22 +88,25 @@ public class JsonAccess implements HistoryAccess
         return false;
     }
 
-    private void SetFile()
-    {
+    
+    @Override
+    public boolean upgradeSettlement(String name) {
+        return false;
+    }
+    
+    private void SetFile() {
         townsFile = new File("plugins/Towns/towns.json");
-        try 
-        {
+        try {
             if (!plugin.getDataFolder().exists())
             { 
                 plugin.getDataFolder().mkdir();
-                if(townsFile.createNewFile())
-                {
+
+                if(townsFile.createNewFile()) {
                     plugin.getLogger().info(("Created towns.json."));
                 }
             }
         }
-        catch (IOException e) 
-        {
+        catch (IOException e) {
             e.printStackTrace();
         }
     }

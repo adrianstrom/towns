@@ -20,45 +20,57 @@ public class CreateSettlement implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
 		Player player = (Player) sender;
-		if (args.length == 0) 
-		{
+
+		if (args.length == 0) {
 			player.sendMessage("Hvilken kommando ønsker du å bruke og hvilek bosetting?");
 			return true;
 		} 
-        else if (args.length == 1) 
-        {
+        else if (args.length == 1) {
 			player.sendMessage("Hvilken bosetting ønsker du å gjøre noe med?");
 			return true;
 		} 
-        else if (args.length == 2) 
-        {
+        else if (args.length == 2) {
 			String action = args[0];
 			String settlementName = args[1];
 
-			if (action.equals("opprett"))
-            {
+			if (action.equals("opprett")) {
 				Settlement settlement = plugin.historyAccess.createSettlement(settlementName, player.getLocation());
-				if(settlement != null)
-				{
+
+				if(settlement != null) {
 					player.sendMessage("Bosettingen med navn " + settlement.getSettlementName() + " ble opprettet!");
 					return true;
 				}
 				player.sendMessage("Bosettingen ble ikke opprettet!");
 				return true;
 			} 
-            else if (action.equals("fjern")) 
-            {
-				if(plugin.historyAccess.deleteSettlement(settlementName))
-				{
+            else if (action.equals("fjern")) {
+				boolean settlementDeleted = plugin.historyAccess.deleteSettlement(settlementName);
+
+				if(settlementDeleted) {
 					player.sendMessage("Bosettingen med navn " + settlementName + " ble fjernet!");
 					return true;
 				}
 				player.sendMessage("Fant ikke den gjeldende bosettingen!");
 				return true;
 			} 
-            else if (action.equals("oppgrader")) 
-            {
-                player.sendMessage("Bosetting med navn " + settlementName + " ble oppgradert!");
+            else if (action.equals("oppgrader")) {
+				boolean settlementUpgraded = plugin.historyAccess.upgradeSettlement(settlementName);
+
+				if(settlementUpgraded) {
+					player.sendMessage("Bosetting med navn " + settlementName + " ble oppgradert!");
+					return true;
+				}
+                player.sendMessage("Bosettingen kunne ikke bli oppgradert!");
+				return true;
+			}
+			else if(action.equals("info")) {
+				Settlement settlement = plugin.historyAccess.getSettlement(null);
+
+				if(settlement != null) {
+					// Show settlement info in a well formatted string.
+					return true;
+				}
+                player.sendMessage("Bosettingen eksisterer ikke!");
 				return true;
 			}
 		}

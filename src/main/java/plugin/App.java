@@ -3,33 +3,29 @@ package plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import plugin.commands.CreateSettlement;
-import plugin.persistence.HistoryAccess;
-import plugin.persistence.JsonAccess;
+import plugin.persistence.JsonRepository;
+import plugin.persistence.SettlementRepository;
 
-public class App extends JavaPlugin
+public class App extends JavaPlugin 
 {
-    public HistoryAccess historyAccess;
+    public SettlementRepository historyAccess;
 
     @Override
-    public void onEnable() 
-    {
+    public void onEnable() {
         InitializePersitence();
 		InitializeClasses();
     }
 
     @Override
-    public void onDisable() 
-    {
+    public void onDisable() {
         
     }
 
-    private void InitializePersitence()
-    {
-        historyAccess = new JsonAccess(this);
+    private void InitializePersitence() {
+        historyAccess = new JsonRepository(this);
     }
 
-    private void InitializeClasses()
-    {
+    private void InitializeClasses() {
         new CreateSettlement(this);
     }
 }

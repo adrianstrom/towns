@@ -7,8 +7,17 @@ import org.bukkit.Location;
 
 import plugin.settlements.Settlement;
 
-public class SqlAccess implements HistoryAccess 
+/* 
+    Create PostgreSQL database or MySQL database.
+    Have one table named Settlements.
+    This table should include all properties including settlement type (discriminator). 
+*/
+
+public class SqlRepository implements SettlementRepository
 {
+    public SqlRepository() {
+
+    }
 
     @Override
     public Settlement createSettlement(String name, Location location) {
@@ -28,6 +37,11 @@ public class SqlAccess implements HistoryAccess
     @Override
     public ArrayList<Settlement> getSettlements() {
         return null;
+    }
+
+    @Override
+    public boolean upgradeSettlement(String name) {
+        return false;
     }
 
 }
