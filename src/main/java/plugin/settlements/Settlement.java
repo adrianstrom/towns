@@ -23,15 +23,15 @@ import plugin.extensions.Location;
 public abstract class Settlement {
 	
 	public UUID uuid;
-	public String settlementName;
-	public Location settlementLocation;
+	public String name;
+	public Location location;
 	public ArrayList<Player> citizens = new ArrayList<Player>();
 	public boolean deleted;
 	
-	public Settlement(String settlementName, Location settlementLocation) {
+	public Settlement(String name, Location location) {
 		this.uuid = UUID.randomUUID();
-		this.settlementName = settlementName;
-		this.settlementLocation = settlementLocation;
+		this.name = name;
+		this.location = location;
 	}
 
 	public Settlement() {
@@ -46,28 +46,28 @@ public abstract class Settlement {
 		this.uuid = UUID.randomUUID();
 	}
 	
-	public String getSettlementName() {
-		return this.settlementName;
+	public String getName() {
+		return this.name;
 	}
 	
-	public void setSettlementName(String newSettlementName) {	
-		this.settlementName = newSettlementName;
+	public void setName(String name) {	
+		this.name = name;
 	}
 	
-	public Location getSettlementLocation() {
-		return this.settlementLocation;
+	public Location getLocation() {
+		return this.location;
 	}
 	
-	public void setSettlementLocation(Location newSettlementLocation) {
-		this.settlementLocation = newSettlementLocation;
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 	
 	public ArrayList<Player> getCitizens() {
 		return this.citizens;
 	}
 	
-	public void setCitizens(ArrayList<Player> newCitizens) {
-		this.citizens = newCitizens;
+	public void setCitizens(ArrayList<Player> citizens) {
+		this.citizens = citizens;
 	}
 	
 	public boolean getDeleted() {

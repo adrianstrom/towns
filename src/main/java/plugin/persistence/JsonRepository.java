@@ -2,9 +2,7 @@ package plugin.persistence;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,21 +11,36 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import plugin.App;
 import plugin.extensions.Location;
-import plugin.settlements.Homestead;
 import plugin.settlements.Settlement;
 
 public class JsonRepository implements SettlementRepository
 {
     private App plugin;
     private File townsFile;
+    private ObjectMapper mapper;
 
     public JsonRepository(App plugin) {
         this.plugin = plugin;
+        mapper = new ObjectMapper();
         SetFile();
     }
 
     @Override
-    public Settlement getSettlement(UUID id) {
+    public Settlement getSettlement(String name) {
+        try {
+            ObjectNode node = (ObjectNode) mapper.readTree(townsFile);
+            ArrayNode settlementsNode = (ArrayNode) node.get("settlements");
+
+            for (JsonNode settlementNode : settlementsNode) {
+                Settlement settlement = mapper.readValue(settlementNode.toString(), Settlement.class);
+
+                if(settlement.name.equals(name)) {
+                    return settlement;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -38,8 +51,7 @@ public class JsonRepository implements SettlementRepository
 
 /** Returns null if settlement wasn't created. */
     @Override
-    public <T extends Settlement> Settlement createSettlement(String settlementName, org.bukkit.Location location, Class<T> classType) {
-        ObjectMapper mapper = new ObjectMapper();
+    public <T extends Settlement> T createSettlement(String settlementName, org.bukkit.Location location, Class<T> classType) {
         try {
             JsonNode node = mapper.readTree(townsFile);
             ArrayNode settlementsNode = null;
@@ -52,11 +64,10 @@ public class JsonRepository implements SettlementRepository
                 node = mapper.createObjectNode();
                 settlementsNode = ((ObjectNode) node).putArray("settlements");
             }
-            
             T settlement = classType.newInstance();
             settlement.setUUID();
-            settlement.setSettlementName(settlementName);
-            settlement.setSettlementLocation(new Location (location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
+            settlement.setName(settlementName);
+            settlement.setLocation(new Location (location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
             
             settlementsNode.addPOJO(settlement);
             mapper.writeValue(townsFile, node);
@@ -74,24 +85,15 @@ public class JsonRepository implements SettlementRepository
 
     @Override
     public boolean deleteSettlement(String name) {
-        ObjectMapper mapper = new ObjectMapper();
         try {
             ObjectNode node = (ObjectNode) mapper.readTree(townsFile);
             ArrayNode settlementsNode = (ArrayNode) node.get("settlements");
 
             for (JsonNode settlementNode : settlementsNode) {
-                plugin.getLogger().info("start");
-                plugin.getLogger().info(settlementNode.toString());
-                plugin.getLogger().info("end");
-                if(settlementNode.toString().equals("{}"))
-                {
-                    continue;
-                }
                 Settlement settlement = mapper.readValue(settlementNode.toString(), Settlement.class);
-                plugin.getLogger().info(settlement.toString());
 
-                if(settlement.getSettlementName().equals(name)) {
-                    settlement.setDeleted();
+                if(settlement.name.equals(name)) {
+                    ((ObjectNode)settlementNode).put("deleted", true);
                     mapper.writeValue(townsFile, node);
                     return true;
                 }

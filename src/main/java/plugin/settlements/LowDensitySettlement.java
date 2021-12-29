@@ -14,4 +14,27 @@ public abstract class LowDensitySettlement extends Settlement {
 	public LowDensitySettlement() {
 		super();
 	}
+
+	public ArrayList<String> getLaws() {
+		return this.laws;
+	}
+
+	public void setLaws(ArrayList<String> laws) {
+		this.laws = laws;
+	}
+
+	public void setLaw(String law) {
+		laws.add(law);
+	}
+
+	public String getFormattedLaws() {
+		String formattedString = "";
+		int count = 1;
+		for (String law : this.laws)
+		{
+			formattedString += "  " + count + ": " + law + "\n";
+			count++;
+		}
+		return formattedString;
+	}
 }

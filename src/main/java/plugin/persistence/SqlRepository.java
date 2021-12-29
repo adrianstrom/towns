@@ -1,7 +1,6 @@
 package plugin.persistence;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import org.bukkit.Location;
 
@@ -20,12 +19,12 @@ public class SqlRepository implements SettlementRepository
     }
 
     @Override
-    public <T extends Settlement> Settlement createSettlement(String name, Location location, Class<T> classType) {
+    public <T extends Settlement> T createSettlement(String name, Location location, Class<T> classType) {
         return null;
     }
 
     @Override
-    public Settlement getSettlement(UUID id) {
+    public Settlement getSettlement(String name) {
         return null;
     }
 
