@@ -6,7 +6,7 @@ import plugin.settlements.base.Settlement;
 
 public class MockRepository implements SettlementRepository {
 
-    public ArrayList<Settlement> settlements = new ArrayList<Settlement>();
+    private ArrayList<Settlement> settlements = new ArrayList<Settlement>();
 
     @Override
     public <T extends Settlement> T createSettlement(String name, Location location, Class<T> classType) {
@@ -28,7 +28,7 @@ public class MockRepository implements SettlementRepository {
                 return settlement;
             }
         }
-        return null;    
+        return null;
     }
 
     @Override
