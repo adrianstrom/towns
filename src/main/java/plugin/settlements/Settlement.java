@@ -21,6 +21,7 @@ import plugin.extensions.Location;
 	@JsonSubTypes.Type(value = Village.class, name = "Village")
 })
 public abstract class Settlement {
+	
 	public UUID uuid;
 	public String settlementName;
 	public Location settlementLocation;
