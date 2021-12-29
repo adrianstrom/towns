@@ -25,12 +25,12 @@ public class CreateSettlement implements CommandExecutor {
 		if (args.length == 0) {
 			player.sendMessage("Hvilken kommando ønsker du å bruke og hvilek bosetting?");
 			return true;
-		} 
-        else if (args.length == 1) {
+
+		} else if (args.length == 1) {
 			player.sendMessage("Hvilken bosetting ønsker du å gjøre noe med?");
 			return true;
-		} 
-        else if (args.length == 2) {
+
+		} else if (args.length == 2) {
 			String action = args[0];
 			String settlementName = args[1];
 
@@ -43,8 +43,8 @@ public class CreateSettlement implements CommandExecutor {
 				}
 				player.sendMessage(Utils.fail("Bosettingen ble ikke opprettet!"));
 				return true;
-			} 
-            else if (action.equals("fjern")) {
+
+			} else if (action.equals("fjern")) {
 				boolean settlementDeleted = plugin.historyAccess.deleteSettlement(settlementName);
 
 				if(settlementDeleted) {
@@ -53,8 +53,8 @@ public class CreateSettlement implements CommandExecutor {
 				}
 				player.sendMessage("Fant ikke den gjeldende bosettingen!");
 				return true;
-			} 
-            else if (action.equals("oppgrader")) {
+
+			} else if (action.equals("oppgrader")) {
 				boolean settlementUpgraded = plugin.historyAccess.upgradeSettlement(settlementName);
 
 				if(settlementUpgraded) {
@@ -63,8 +63,8 @@ public class CreateSettlement implements CommandExecutor {
 				}
                 player.sendMessage("Bosettingen kunne ikke bli oppgradert!");
 				return true;
-			}
-			else if(action.equals("info")) {
+				
+			} else if(action.equals("info")) {
 				Settlement settlement = plugin.historyAccess.getSettlement(null);
 
 				if(settlement != null) {

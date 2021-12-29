@@ -6,8 +6,8 @@ import plugin.commands.CreateSettlement;
 import plugin.persistence.JsonRepository;
 import plugin.persistence.SettlementRepository;
 
-public class App extends JavaPlugin 
-{
+public class App extends JavaPlugin {
+    
     public SettlementRepository historyAccess;
 
     @Override
