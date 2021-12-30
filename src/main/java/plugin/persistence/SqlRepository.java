@@ -41,4 +41,9 @@ public class SqlRepository implements SettlementRepository
     public boolean upgradeSettlement(String name) {
         return false;
     }
+
+    @Override
+    public boolean degradeSettlement(String name) {
+        return false;
+    }
 }

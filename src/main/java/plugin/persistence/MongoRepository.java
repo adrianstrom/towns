@@ -30,5 +30,10 @@ public class MongoRepository implements SettlementRepository {
     public ArrayList<Settlement> getSettlements() {
         return null;
     }
+
+    @Override
+    public boolean degradeSettlement(String name) {
+        return false;
+    }
     
 }

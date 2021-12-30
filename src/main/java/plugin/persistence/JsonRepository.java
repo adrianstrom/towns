@@ -136,4 +136,9 @@ public class JsonRepository implements SettlementRepository
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean degradeSettlement(String name) {
+        return false;
+    }
 }

@@ -54,4 +54,9 @@ public class MockRepository implements SettlementRepository {
     public ArrayList<Settlement> getSettlements() {
         return settlements;
     }
+
+    @Override
+    public boolean degradeSettlement(String name) {
+        return false;
+    }
 }

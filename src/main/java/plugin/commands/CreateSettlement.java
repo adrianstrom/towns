@@ -35,11 +35,13 @@ public class CreateSettlement implements CommandExecutor {
 
 			if(action.equals("hjelp"))
 			{
-				player.sendMessage(
-					"/bosetting info (bynavn)] \n" +
-					"/bosetting opprett (bynavn)] \n" +
-					"/bosetting fjern (bynavn)] \n" +
-					"/bosetting oppgrader (bynavn)] \n");
+				player.sendMessage(Utils.chat("&6===============[ MineNorge ]=============== \n" +
+					"&a/bosetting opprett (bynavn)] \n" +
+					"&c/bosetting fjern (bynavn)] \n" +
+					"&b/bosetting info (bynavn)] \n" +
+					"&d/bosetting tp (bynavn)] \n" +
+					"&2/bosetting oppgrader (bynavn)] \n" +
+					"&4/bosetting degrader (bynavn)] \n"));
 				return true;
 			}
 			player.sendMessage("Hvilken bosetting ønsker du å gjøre noe med?");
@@ -53,7 +55,7 @@ public class CreateSettlement implements CommandExecutor {
 				Homestead settlement = plugin.historyAccess.createSettlement(settlementName, player.getLocation(), Homestead.class);
 
 				if(settlement != null) {
-					player.sendMessage(Utils.success("Bosettingen med navn " + settlement.name + " ble opprettet!"));
+					player.sendMessage(Utils.success("Bosettingen med navn &2" + settlement.name + " &able opprettet!"));
 					return true;
 				}
 				player.sendMessage(Utils.fail("Bosettingen ble ikke opprettet!"));
@@ -63,7 +65,7 @@ public class CreateSettlement implements CommandExecutor {
 				boolean settlementDeleted = plugin.historyAccess.deleteSettlement(settlementName);
 
 				if(settlementDeleted) {
-					player.sendMessage(Utils.success("Bosettingen med navn " + settlementName + " ble fjernet!"));
+					player.sendMessage(Utils.success("Bosettingen med navn &2" + settlementName + " &able fjernet!"));
 					return true;
 				}
 				player.sendMessage(Utils.fail("Denne bosettingen finnes ikke, og kunne derfor ikke fjernes!"));
@@ -73,7 +75,7 @@ public class CreateSettlement implements CommandExecutor {
 				boolean settlementUpgraded = plugin.historyAccess.upgradeSettlement(settlementName);
 
 				if(settlementUpgraded) {
-					player.sendMessage(Utils.success("Bosetting med navn " + settlementName + " ble oppgradert!"));
+					player.sendMessage(Utils.success("Bosetting med navn &2" + settlementName + " &able oppgradert!"));
 					return true;
 				}
                 player.sendMessage(Utils.fail("Bosettingen kunne ikke bli oppgradert!"));
@@ -94,7 +96,7 @@ public class CreateSettlement implements CommandExecutor {
 				if(settlement != null) {
 					Location loc = new org.bukkit.Location(Bukkit.getWorld(settlement.location.id), settlement.location.x, settlement.location.y, settlement.location.z);
 					player.teleport(loc);
-					player.sendMessage(Utils.success(" Du ble teleportert til " + settlement.name + "!"));
+					player.sendMessage(Utils.success(" Du ble teleportert til &2" + settlement.name + "&a!"));
 					return true;
 				}
                 player.sendMessage(Utils.fail("Denne bosettingen finnes ikke, så du kunne ikke teleporteres!"));
