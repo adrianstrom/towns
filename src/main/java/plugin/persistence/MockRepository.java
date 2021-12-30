@@ -8,6 +8,7 @@ public class MockRepository implements SettlementRepository {
 
     private ArrayList<Settlement> settlements = new ArrayList<Settlement>();
 
+    @SuppressWarnings( "deprecation" )
     @Override
     public <T extends Settlement> T createSettlement(String name, Location location, Class<T> classType) {
         try {
@@ -20,12 +21,13 @@ public class MockRepository implements SettlementRepository {
         return null;
     }
 
+    @SuppressWarnings (value="unchecked")
     @Override
-    public Settlement getSettlement(String name) {
+    public <T extends Settlement> T getSettlement(String name) {
         for (Settlement settlement : this.settlements) {
             if(settlement.name == name)
             {
-                return settlement;
+                return (T) settlement;
             }
         }
         return null;

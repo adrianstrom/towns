@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import plugin.App;
 import plugin.settlements.Hamlet;
 import plugin.settlements.Homestead;
+import plugin.settlements.Suburb;
 import plugin.settlements.base.Settlement;
 import plugin.utils.Utils;
 
@@ -47,10 +48,13 @@ public class CreateSettlement implements CommandExecutor {
 			String settlementName = args[1];
 
 			if (action.equals("opprett")) {
-				Hamlet settlement = plugin.historyAccess.<Hamlet>createSettlement(settlementName, player.getLocation(), Hamlet.class);
+				Homestead settlement = plugin.historyAccess.createSettlement(settlementName + "1", player.getLocation(), Homestead.class);
+				Hamlet settlement2 = plugin.historyAccess.createSettlement(settlementName + "2", player.getLocation(), Hamlet.class);
+				Suburb settlement3 = plugin.historyAccess.createSettlement(settlementName + "3", player.getLocation(), Suburb.class);
 
-				if(settlement != null) {
-					player.sendMessage(Utils.success("Bosettingen med navn " + settlement.name + " ble opprettet!"));
+				if(settlement != null && settlement2 != null && settlement3 != null) {
+					//player.sendMessage(Utils.success("Bosettingen med navn " + settlement.name + " ble opprettet!"));
+					player.sendMessage("opprettet");
 					return true;
 				}
 				player.sendMessage(Utils.fail("Bosettingen ble ikke opprettet!"));
@@ -80,20 +84,20 @@ public class CreateSettlement implements CommandExecutor {
 				Settlement settlement = plugin.historyAccess.getSettlement(settlementName);
 
 				if(settlement != null) {
-					String settlementInfo = Utils.chat("&a------------{ &l&6" + settlement.name.toUpperCase().replace("", " ").trim() + "&r&a }------------\n"
-					+ "&7Type: &f" + settlement.getClass().getSimpleName() + "\n"
-					+ "&7Lokasjon: &f(" + Math.round(settlement.location.x) + ", " + Math.round(settlement.location.y) + ", " + Math.round(settlement.location.z) + ") \n"
-					+ "&7Innbyggere: &f" + settlement.citizens.size() + "\n");
-					if(settlement instanceof Homestead) {
-						player.sendMessage(settlementInfo);
-					} else if (settlement instanceof Hamlet) {
-						Hamlet hamlet = (Hamlet) settlement;
-						String hamletInfo = Utils.chat("&7Regler: &f \n" + hamlet.getFormattedLaws());
-						player.sendMessage(settlementInfo.concat(hamletInfo));
-					}
+					player.sendMessage(settlement.getSettlementInfo());
 					return true;
 				}
                 player.sendMessage("Bosettingen eksisterer ikke!");
+				return true;
+			} else if(action.equals("tp") || action.equals("teleporter")) {
+				Settlement settlement = plugin.historyAccess.getSettlement(settlementName);
+
+				if(settlement != null) {
+					// teleport to location
+					//player.teleport(location)
+					return true;
+				}
+                player.sendMessage("Bosettingen eksisterer ikke, så du kunne ikke teleporteres!");
 				return true;
 			}
 		}

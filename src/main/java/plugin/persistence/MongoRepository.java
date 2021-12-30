@@ -12,7 +12,7 @@ public class MongoRepository implements SettlementRepository {
     }
 
     @Override
-    public Settlement getSettlement(String name) {
+    public <T extends Settlement> T getSettlement(String name) {
         return null;
     }
 

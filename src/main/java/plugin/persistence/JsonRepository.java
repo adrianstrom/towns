@@ -3,7 +3,7 @@ package plugin.persistence;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -26,13 +26,13 @@ public class JsonRepository implements SettlementRepository
     }
 
     @Override
-    public Settlement getSettlement(String name) {
+    public <T extends Settlement> T getSettlement(String name) {
         try {
             ObjectNode node = (ObjectNode) mapper.readTree(townsFile);
             ArrayNode settlementsNode = (ArrayNode) node.get("settlements");
 
             for (JsonNode settlementNode : settlementsNode) {
-                Settlement settlement = mapper.readValue(settlementNode.toString(), Settlement.class);
+                T settlement = mapper.readValue(settlementNode.toString(), new TypeReference<T>() { });
 
                 if(settlement.name.equals(name)) {
                     return settlement;
@@ -46,10 +46,24 @@ public class JsonRepository implements SettlementRepository
 
     @Override
     public ArrayList<Settlement> getSettlements()  {
+        ArrayList<Settlement> settlements = new ArrayList<Settlement>();
+        try {
+            ObjectNode node = (ObjectNode) mapper.readTree(townsFile);
+            ArrayNode settlementsNode = (ArrayNode) node.get("settlements");
+
+            for (JsonNode settlementNode : settlementsNode) {
+                Settlement settlement = mapper.readValue(settlementNode.toString(), Settlement.class);
+                settlements.add(settlement);
+            }
+            return settlements;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
 /** Returns null if settlement wasn't created. */
+
     @Override
     public <T extends Settlement> T createSettlement(String settlementName, org.bukkit.Location location, Class<T> classType) {
         try {
@@ -73,11 +87,7 @@ public class JsonRepository implements SettlementRepository
             mapper.writeValue(townsFile, node);
             return settlement;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

@@ -2,6 +2,7 @@ package plugin.settlements.base;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -15,6 +16,7 @@ import plugin.settlements.Metropolis;
 import plugin.settlements.Suburb;
 import plugin.settlements.Town;
 import plugin.settlements.Village;
+import plugin.utils.Utils;
 
 @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, property="type")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -34,15 +36,17 @@ public abstract class Settlement {
 	public Location location;
 	public ArrayList<Player> citizens = new ArrayList<Player>();
 	public boolean deleted;
-	
-	public Settlement(String name, Location location) {
-		this.uuid = UUID.randomUUID();
-		this.name = name;
-		this.location = location;
-	}
 
 	public Settlement() {
 		
+	}
+
+	@JsonIgnore
+	public String getSettlementInfo() { 
+		return Utils.chat("&a------------{ &l&6" + name.toUpperCase().replace("", " ").trim() + "&r&a }------------\n"
+		+ "&7Type: &f" + getClass().getSimpleName() + "\n"
+		+ "&7Lokasjon: &f(" + Math.round(location.x) + ", " + Math.round(location.y) + ", " + Math.round(location.z) + ") \n"
+		+ "&7Innbyggere: &f" + citizens.size() + "\n");
 	}
 
 	public UUID getUUID() {

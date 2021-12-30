@@ -1,15 +1,12 @@
 package plugin.settlements.base;
 
 import java.util.ArrayList;
-import plugin.extensions.Location;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import plugin.utils.Utils;
 
 public abstract class LowDensitySettlement extends Settlement {
 	
     public ArrayList<String> laws = new ArrayList<String>();
-
-    public LowDensitySettlement(String settlementName, Location location) {
-		super(settlementName, location);
-	}
 
 	public LowDensitySettlement() {
 		super();
@@ -27,6 +24,7 @@ public abstract class LowDensitySettlement extends Settlement {
 		laws.add(law);
 	}
 
+	@JsonIgnore 
 	public String getFormattedLaws() {
 		String formattedString = "";
 		int count = 1;
@@ -36,5 +34,13 @@ public abstract class LowDensitySettlement extends Settlement {
 			count++;
 		}
 		return formattedString;
+	}
+
+	@Override
+	public String getSettlementInfo() {
+		String baseInfo = super.getSettlementInfo();
+		String info = Utils.chat(""
+		+ "&7Regler: &f \n" + getFormattedLaws() + "\n" );
+		return baseInfo.concat(info);
 	}
 }
