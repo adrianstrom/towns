@@ -1,7 +1,7 @@
 package plugin.settlements.base;
 
 import java.util.ArrayList;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bukkit.entity.Player;
 
 import plugin.extensions.Location;
@@ -41,6 +41,14 @@ public abstract class MediumDensitySettlement extends LowDensitySettlement {
 		this.mallLocation = mallLocation;
 	}
 
+	@JsonIgnore
+	public String getMayorDisplayName() {
+		if(mayor == null) {
+			return "Ikke satt";
+		}
+		return mayor.getDisplayName();
+	}
+
 	private String getFormattedCouncil() {
 		String councilNames = "";
 		for (Player player : council) {
@@ -52,9 +60,9 @@ public abstract class MediumDensitySettlement extends LowDensitySettlement {
 	@Override
 	public String getSettlementInfo() {
 		String baseInfo = super.getSettlementInfo();
-		String info = Utils.chat(""
-		+ "&7Borgermester: &f" + mayor != null ? mayor.getDisplayName() : "Ikke satt" + "\n" 
-		+ "&7Byråd: &f" + getFormattedCouncil() + "\n");
+		String info = Utils.chat("\n"
+		+ "&7Borgermester: &f" + getMayorDisplayName() + "\n" 
+		+ "&7Byråd: &f" + getFormattedCouncil());
 		return baseInfo.concat(info);
 	}
 }

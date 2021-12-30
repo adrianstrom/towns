@@ -46,7 +46,7 @@ public abstract class Settlement {
 		return Utils.chat("&a------------{ &l&6" + name.toUpperCase().replace("", " ").trim() + "&r&a }------------\n"
 		+ "&7Type: &f" + getClass().getSimpleName() + "\n"
 		+ "&7Lokasjon: &f(" + Math.round(location.x) + ", " + Math.round(location.y) + ", " + Math.round(location.z) + ") \n"
-		+ "&7Innbyggere: &f" + citizens.size() + "\n");
+		+ "&7Innbyggere: &f" + citizens.size());
 	}
 
 	public UUID getUUID() {

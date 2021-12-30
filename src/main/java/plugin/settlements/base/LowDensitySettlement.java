@@ -39,8 +39,8 @@ public abstract class LowDensitySettlement extends Settlement {
 	@Override
 	public String getSettlementInfo() {
 		String baseInfo = super.getSettlementInfo();
-		String info = Utils.chat(""
-		+ "&7Regler: &f \n" + getFormattedLaws() + "\n" );
+		String info = Utils.chat("\n"
+		+ "&7Regler: &f \n" + getFormattedLaws());
 		return baseInfo.concat(info);
 	}
 }

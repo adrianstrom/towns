@@ -81,7 +81,7 @@ public class JsonRepository implements SettlementRepository
             T settlement = classType.newInstance();
             settlement.setUUID();
             settlement.setName(settlementName);
-            settlement.setLocation(new Location (location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
+            settlement.setLocation(new Location (location.getWorld().getUID(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
             
             settlementsNode.addPOJO(settlement);
             mapper.writeValue(townsFile, node);

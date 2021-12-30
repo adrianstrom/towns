@@ -1,5 +1,7 @@
 package plugin.commands;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -48,13 +50,10 @@ public class CreateSettlement implements CommandExecutor {
 			String settlementName = args[1];
 
 			if (action.equals("opprett")) {
-				Homestead settlement = plugin.historyAccess.createSettlement(settlementName + "1", player.getLocation(), Homestead.class);
-				Hamlet settlement2 = plugin.historyAccess.createSettlement(settlementName + "2", player.getLocation(), Hamlet.class);
-				Suburb settlement3 = plugin.historyAccess.createSettlement(settlementName + "3", player.getLocation(), Suburb.class);
+				Homestead settlement = plugin.historyAccess.createSettlement(settlementName, player.getLocation(), Homestead.class);
 
-				if(settlement != null && settlement2 != null && settlement3 != null) {
-					//player.sendMessage(Utils.success("Bosettingen med navn " + settlement.name + " ble opprettet!"));
-					player.sendMessage("opprettet");
+				if(settlement != null) {
+					player.sendMessage(Utils.success("Bosettingen med navn " + settlement.name + " ble opprettet!"));
 					return true;
 				}
 				player.sendMessage(Utils.fail("Bosettingen ble ikke opprettet!"));
@@ -67,7 +66,7 @@ public class CreateSettlement implements CommandExecutor {
 					player.sendMessage(Utils.success("Bosettingen med navn " + settlementName + " ble fjernet!"));
 					return true;
 				}
-				player.sendMessage(Utils.fail("Fant ikke den gjeldende bosettingen!"));
+				player.sendMessage(Utils.fail("Denne bosettingen finnes ikke, og kunne derfor ikke fjernes!"));
 				return true;
 
 			} else if (action.equals("oppgrader")) {
@@ -87,17 +86,18 @@ public class CreateSettlement implements CommandExecutor {
 					player.sendMessage(settlement.getSettlementInfo());
 					return true;
 				}
-                player.sendMessage("Bosettingen eksisterer ikke!");
+                player.sendMessage(Utils.fail("Denne bosettingen finnes ikke!"));
 				return true;
 			} else if(action.equals("tp") || action.equals("teleporter")) {
 				Settlement settlement = plugin.historyAccess.getSettlement(settlementName);
 
 				if(settlement != null) {
-					// teleport to location
-					//player.teleport(location)
+					Location loc = new org.bukkit.Location(Bukkit.getWorld(settlement.location.id), settlement.location.x, settlement.location.y, settlement.location.z);
+					player.teleport(loc);
+					player.sendMessage(Utils.success(" Du ble teleportert til " + settlement.name + "!"));
 					return true;
 				}
-                player.sendMessage("Bosettingen eksisterer ikke, så du kunne ikke teleporteres!");
+                player.sendMessage(Utils.fail("Denne bosettingen finnes ikke, så du kunne ikke teleporteres!"));
 				return true;
 			}
 		}
