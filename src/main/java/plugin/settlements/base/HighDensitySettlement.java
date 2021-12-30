@@ -1,7 +1,7 @@
 package plugin.settlements.base;
 
 import java.util.ArrayList;
-import plugin.city.CityBank;
+import plugin.bank.CityBank;
 
 public abstract class HighDensitySettlement extends MediumDensitySettlement {
 

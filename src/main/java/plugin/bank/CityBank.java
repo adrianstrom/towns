@@ -1,4 +1,4 @@
-package plugin.city;
+package plugin.bank;
 
 public class CityBank {
 	
