@@ -7,4 +7,14 @@ public class Homestead extends Settlement {
 	public Homestead() {
 		super();
 	}
+
+	@Override
+	public void upgrade() {
+		
+	}
+
+	@Override
+	public void degrade() {
+		
+	}
 }

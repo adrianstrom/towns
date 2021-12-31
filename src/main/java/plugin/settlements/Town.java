@@ -7,4 +7,14 @@ public class Town extends HighDensitySettlement {
 	public Town() {
 		super();	
 	}
+
+	@Override
+	public void upgrade() {
+		
+	}
+
+	@Override
+	public void degrade() {
+		
+	}
 }

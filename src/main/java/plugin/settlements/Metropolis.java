@@ -7,4 +7,14 @@ public class Metropolis extends HighDensitySettlement {
 	public Metropolis() {
 		super();
 	}
+
+	@Override
+	public void upgrade() {
+		
+	}
+
+	@Override
+	public void degrade() {
+		
+	}
 }

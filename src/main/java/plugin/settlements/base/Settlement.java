@@ -41,18 +41,13 @@ public abstract class Settlement {
 		
 	}
 
-	@JsonIgnore
-	public String getSettlementInfo() { 
-		return Utils.chat("&a------------{ &l&6" + name.toUpperCase().replace("", " ").trim() + "&r&a }------------\n"
-		+ "&7Type: &f" + getClass().getSimpleName() + "\n"
-		+ "&7Lokasjon: &f(" + Math.round(location.x) + ", " + Math.round(location.y) + ", " + Math.round(location.z) + ") \n"
-		+ "&7Innbyggere: &f" + citizens.size());
-	}
+	public abstract void upgrade();
+	public abstract void degrade();
 
 	public UUID getUUID() {
 		return this.uuid;
 	}
-
+	
 	public void setUUID() {
 		this.uuid = UUID.randomUUID();
 	}
@@ -87,5 +82,13 @@ public abstract class Settlement {
 	
 	public void setDeleted() {
 		this.deleted = true;
+	}
+
+	@JsonIgnore
+	public String getSettlementInfo() { 
+		return Utils.chat("&a------------{ &l&6" + name.toUpperCase().replace("", " ").trim() + "&r&a }------------\n"
+		+ "&7Type: &f" + getClass().getSimpleName() + "\n"
+		+ "&7Lokasjon: &f(" + Math.round(location.x) + ", " + Math.round(location.y) + ", " + Math.round(location.z) + ") \n"
+		+ "&7Innbyggere: &f" + citizens.size());
 	}
 }

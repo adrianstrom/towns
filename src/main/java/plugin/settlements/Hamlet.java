@@ -7,4 +7,14 @@ public class Hamlet extends LowDensitySettlement {
 	public Hamlet() {
 		super();
 	}
+
+	@Override
+	public void upgrade() {
+		
+	}
+
+	@Override
+	public void degrade() {
+		
+	}
 }

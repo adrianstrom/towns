@@ -7,9 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import plugin.App;
-import plugin.settlements.Hamlet;
 import plugin.settlements.Homestead;
-import plugin.settlements.Suburb;
 import plugin.settlements.base.Settlement;
 import plugin.utils.Utils;
 
@@ -72,13 +70,9 @@ public class CreateSettlement implements CommandExecutor {
 				return true;
 
 			} else if (action.equals("oppgrader")) {
-				boolean settlementUpgraded = plugin.historyAccess.upgradeSettlement(settlementName);
-
-				if(settlementUpgraded) {
-					player.sendMessage(Utils.success("Bosetting med navn &2" + settlementName + " &able oppgradert!"));
-					return true;
-				}
-                player.sendMessage(Utils.fail("Bosettingen kunne ikke bli oppgradert!"));
+				Settlement settlement = plugin.historyAccess.getSettlement(settlementName);
+				settlement.upgrade();
+				player.sendMessage(Utils.success("Bosetting med navn &2" + settlementName + " &able oppgradert!"));
 				return true;
 				
 			} else if(action.equals("info")) {
